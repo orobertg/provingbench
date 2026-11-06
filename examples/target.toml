@@ -1,0 +1,8 @@
+# Put a copy in <provingbench home>/targets/. See docs/connecting-agents.md.
+id = "my-agent-test"
+agent_id = "my-agent-test"
+url = "http://127.0.0.1:8801/v1/turn"
+# token_env = "MY_AGENT_TOKEN"          # optional; sent as a bearer token
+body = { session_id = "{session}", text = "{message}" }
+reply_path = "reply"
+timeout_s = 300

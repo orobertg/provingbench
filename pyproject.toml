@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "provingbench"
+version = "0.1.0"
+description = "A local evaluator: a model proxy that switches models, logs every call, and grades your own task lists."
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+dependencies = ["httpx>=0.27", "starlette>=0.37,<2", "uvicorn>=0.30,<0.60"]    # hang-ups rely on uvicorn's ASGI version
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio"]
+
+[project.scripts]
+provingbench = "provingbench.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/provingbench"]
+artifacts = ["src/provingbench/static/**"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+pythonpath = ["tests"]
+markers = ["live: hits a real model endpoint"]
+addopts = "-m 'not live'"

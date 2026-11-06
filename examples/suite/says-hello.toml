@@ -1,0 +1,14 @@
+# Copy this folder, then name it in ProvingBench's config: [suites] mine = "path/to/folder"
+id = "says-hello"
+title = "Answers a greeting without calling any tool"
+tags = ["chat"]
+
+[[turns]]
+say = "Hello! Please answer in one short sentence."
+
+[[checks]]
+type = "reply_not_empty"
+
+[[checks]]
+type = "max_tool_rounds"
+limit = 0

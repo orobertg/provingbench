@@ -1,0 +1,101 @@
+/* A calibration bench: cool enamel, dark ink, and one instrument face. Readings are the loudest thing on the page. */
+:root {
+  color-scheme: light dark;
+  --enamel: #dfe5e3;
+  --panel: #eef2f0;
+  --ink: #17303d;
+  --dim: #51676f;
+  --line: #b4c1be;
+  --pass: #0b6e62;
+  --fail: #a81f4a;
+  --warn: #8a5a00;
+  --fill: #17303d;
+  --face: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", system-ui, sans-serif;
+  --code: Consolas, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --enamel: #13242d;
+    --panel: #1a2f3a;
+    --ink: #dbe6e3;
+    --dim: #97abb0;
+    --line: #36505b;
+    --pass: #4fc4b0;
+    --fail: #f07a9c;
+    --warn: #e0b05a;
+    --fill: #dbe6e3;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--enamel); color: var(--ink); font: 16px/1.45 var(--face); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.bar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 28px; padding: 14px 24px 0; border-bottom: 2px solid var(--ink); }
+.mark { font-size: 24px; font-stretch: condensed; font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+nav a { padding: 4px 0 8px; color: var(--dim); text-decoration: none; border-bottom: 4px solid transparent; }
+nav a[aria-current] { color: var(--ink); border-bottom-color: var(--ink); }
+main { padding: 20px 24px 48px; outline: none; }
+h1 { margin: 0 0 14px; font-size: 26px; font-weight: 600; }
+h2 { margin: 28px 0 10px; font-size: 19px; font-weight: 600; }
+p { max-width: 70ch; }
+.dim { color: var(--dim); }
+.banner { margin: 0; padding: 10px 24px; max-width: none; background: var(--fail); color: var(--enamel); }
+.filters { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 14px; align-items: end; }
+label { display: grid; gap: 2px; font-size: 14px; color: var(--dim); }
+input, select, button, textarea { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 2px; padding: 5px 8px; max-width: 100%; }
+button { cursor: pointer; border-color: var(--ink); }
+button.primary { background: var(--fill); color: var(--enamel); }
+button:disabled { opacity: 0.5; cursor: default; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-weight: 500; font-size: 14px; color: var(--dim); border-bottom: 1px solid var(--ink); padding: 4px 12px 4px 0; white-space: nowrap; }
+td { padding: 6px 12px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.num, th.num { text-align: right; }
+tr.open-row { cursor: pointer; }
+tr.open-row:hover td { background: var(--panel); }
+tr.detail td { background: var(--panel); padding: 12px; }
+.flag { display: inline-block; margin: 0 4px 2px 0; padding: 0 6px; border: 1px solid var(--fail); color: var(--fail); border-radius: 2px; font-size: 14px; }
+.pass { color: var(--pass); }
+.fail { color: var(--fail); }
+.warn { color: var(--warn); }
+pre { margin: 6px 0 14px; padding: 8px 10px; max-height: 340px; overflow: auto; font: 13px/1.45 var(--code); background: var(--enamel); white-space: pre-wrap; overflow-wrap: anywhere; }
+.note { padding: 8px 12px; border-left: 4px solid var(--warn); background: var(--panel); max-width: 70ch; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.empty { padding: 24px 0; max-width: 70ch; }
+/* The reading: the one loud thing. A big number with one mark per attempt beneath it, like ticks on a dial. */
+.board th[scope="row"] { position: sticky; left: 0; background: var(--enamel); min-width: 170px; font-size: 15px; color: var(--ink); white-space: normal; padding: 10px 16px 10px 0; }
+.board thead th { vertical-align: bottom; padding-bottom: 8px; white-space: normal; min-width: 130px; overflow-wrap: anywhere; color: var(--ink); }
+.board td { padding: 10px 16px 10px 0; }
+.overall { font-size: 22px; font-weight: 700; font-stretch: condensed; font-variant-numeric: tabular-nums; }
+.reading { display: grid; gap: 4px; justify-items: start; text-decoration: none; }
+.reading:hover .value { text-decoration: underline; }
+.value { font-size: 30px; line-height: 1; font-weight: 700; font-stretch: condensed; font-variant-numeric: tabular-nums; }
+.segs { display: flex; flex-wrap: wrap; gap: 2px; max-width: 120px; }
+.seg { width: 12px; height: 8px; }
+.seg-pass { background: var(--pass); }
+.seg-fail { background: transparent; box-shadow: inset 0 0 0 2px var(--fail); }
+.seg-error { background: var(--line); }
+.small { font-size: 13px; }
+.value-line { font-size: 18px; }
+.stack { display: grid; gap: 14px; }
+.stack label { justify-items: start; }
+.plain th { border: 0; padding-right: 20px; }
+.plain td { border: 0; }
+.wide { width: 60%; }
+.gauge { display: block; height: 10px; background: var(--panel); box-shadow: inset 0 0 0 1px var(--line); }
+.gauge-fill { display: block; height: 100%; background: var(--pass); }
+ul { padding-left: 20px; margin: 6px 0 14px; }
+li { margin-bottom: 2px; }
+code { font: 13.5px var(--code); overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .bar { padding: 10px 16px 0; }
+  main { padding: 16px 16px 40px; }
+  .banner { padding: 10px 16px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  tr.fresh td { animation: fresh 1.2s ease-out; }
+  @keyframes fresh { from { background: var(--panel); } to { background: transparent; } }
+}
+tbody th { border-bottom: 1px solid var(--line); }
+.board, .plain { width: auto; }
